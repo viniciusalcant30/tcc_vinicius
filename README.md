@@ -1,0 +1,1 @@
+# TEMA: O uso de análise de sentimentos em notícias para a previsão da variação no preços de ações

@@ -11,6 +11,7 @@ AZURE_SUBSCRIPTION_KEY = os.environ.get('AZURE_SUBSCRIPTION_KEY')
 AZURE_SUBSCRIPTION_KEY2 = os.environ.get('AZURE_SUBSCRIPTION_KEY2')
 AZURE_ENDPOINT = os.environ.get('AZURE_ENDPOINT')
 
+# formatar resultado da busca 
 def format_search_result(funcao):
     def wrapper(*args, **kwargs):
         search_results = funcao(*args, **kwargs)
@@ -47,25 +48,23 @@ def format_search_result(funcao):
         df_bing_news['name_raw'] = df_bing_news['name']
         df_bing_news['descriptions'] = df_bing_news['descriptions'].apply(lambda x: html2text(x))
         df_bing_news['name'] = df_bing_news['name'].apply(lambda x: html2text(x))
+        df_bing_news['datePublished'] = pd.to_datetime(df_bing_news['datePublished'], format='%Y-%m-%dT%H:%M:%S.%fZ')
         return df_bing_news       
 
     return wrapper
 
-
 @format_search_result
-def search_news(search_term, result_count, market='pt-BR'):
+def search_news(search_term, result_count, period, market='pt-BR'):
 
     search_url = f'{AZURE_ENDPOINT}v7.0/news/search'
     headers = {"Ocp-Apim-Subscription-Key" : AZURE_SUBSCRIPTION_KEY}
     params = {"q": search_term, "textDecorations": False, "textFormat": "HTML", "count":result_count, 
-                'mkt':market,'setlang':'pt-br'}
+                'mkt':market,'setlang':'pt-br','freshness':period}
     response = requests.get(search_url, headers=headers, params=params)
     response.raise_for_status()
     search_results = json.dumps(response.json())
     search_results = json.loads(search_results) # json -> dict
-    
     return search_results
-
 
 # params['freshness'] = 'Day'
 # params['freshness'] = 'Week'

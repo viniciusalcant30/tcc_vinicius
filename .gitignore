@@ -160,3 +160,8 @@ cython_debug/
 #.idea/
 
 azure_functions_tcc/
+
+env
+
+data/
+LIWC2015 Dictionary - Brazilian Portuguese.dicx

@@ -1,13 +1,21 @@
-from newspaper import Article
+import pandas as pd
+import os
 
-# Get url content - newspaper3k
-def extract_url_content(url):
-    article = Article(url)
-    try:
-        article.download()
-        article.parse()
-        html_content = article.html
-        text = article.text
-    except:
-        text = 'ERROR'
-    return text
+
+def get_dataframe(local_path):
+    '''
+    Leitura da paste onde está baixado os arquivos e transformação dos arquivos 
+    .parquet em um único dataframe
+    
+    '''
+
+    file_list = os.listdir(local_path)
+
+    dataframes = []
+    for file in file_list: 
+        file_path = os.path.join(local_path,file)
+        df = pd.read_parquet(file_path)
+        dataframes.append(df)
+
+    result = pd.concat(dataframes)
+    return result.reset_index(drop=True)

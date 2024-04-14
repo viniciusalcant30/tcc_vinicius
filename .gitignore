@@ -160,8 +160,13 @@ cython_debug/
 #.idea/
 
 azure_functions_tcc/
+imagens/
+planilhas/
 
 env
 
 data/
 LIWC2015 Dictionary - Brazilian Portuguese.dicx
+*.csv
+*.xlsx
+*.parquet

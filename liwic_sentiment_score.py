@@ -41,3 +41,4 @@ def get_sentiment_score(text, dictionary):
     result_score = result.loc[result['score_liwc2015'] != 0,'score_liwc2015'].mean()
 
     return f'positivo {count_p} / negativo: {count_n} / mean_score: {result_score}'
+

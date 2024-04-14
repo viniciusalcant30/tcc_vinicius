@@ -4,7 +4,7 @@ import azure.functions as func
 import pandas as pd
 from datetime import datetime 
 import bing_search as bing
-import util
+import data_processing.util as util
 from pyarrow import parquet as pq
 import tempfile
 import os
